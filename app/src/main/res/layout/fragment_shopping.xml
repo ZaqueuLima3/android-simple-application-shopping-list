@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivBackground"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
@@ -17,22 +18,23 @@
         app:srcCompat="@drawable/background" />
 
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="36dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif-condensed"
-        android:text="Shopping List"
+        android:text="@string/shopping_list_title"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/llContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/llContainer"
         android:layout_width="match_parent"
         android:layout_height="580dp"
         android:background="@drawable/layout_bg"
@@ -47,8 +49,11 @@
         app:layout_goneMarginTop="-25dp">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvShoppingList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:listitem="@layout/shopping_item" />
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
