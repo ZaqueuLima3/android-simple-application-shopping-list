@@ -70,4 +70,21 @@ class ShoppingDaoTest {
         val allShoppingItems = sut.observeAllShoppingItems().getOrAwaitValue()
         assertThat(allShoppingItems).doesNotContain(shoppingItem)
     }
+
+    @Test
+    fun should_return_the_sum_of_all_items_price() = runBlockingTest {
+        (1..3).forEach {
+            sut.insertShoppingItem(
+                ShoppingItem(
+                    id = it,
+                    name = "name",
+                    amount = it + 2,
+                    price = (it * 10).toFloat(),
+                    imageUrl = "url"
+                )
+            )
+        }
+        val totalPriceSum = sut.observeTotalPrice().getOrAwaitValue()
+        assertThat(totalPriceSum).isEqualTo(3 * 10 + 4 * 20 + 5 * 30)
+    }
 }
