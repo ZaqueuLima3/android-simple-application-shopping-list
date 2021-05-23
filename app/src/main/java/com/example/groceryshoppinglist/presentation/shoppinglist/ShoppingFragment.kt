@@ -1,4 +1,4 @@
-package com.example.groceryshoppinglist.presentation.shopping_list
+package com.example.groceryshoppinglist.presentation.shoppinglist
 
 import android.os.Bundle
 import android.view.View
