@@ -10,6 +10,9 @@ interface ShoppingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertShoppingItem(shoppingItem: ShoppingItem)
 
+    @Delete
+    suspend fun deleteShoppingItem(shoppingItem: ShoppingItem)
+
     @Query("SELECT * FROM $SHOPPING_ITEM_TABLE_NAME")
     fun observeAllShoppingItems(): LiveData<List<ShoppingItem>>
 }
