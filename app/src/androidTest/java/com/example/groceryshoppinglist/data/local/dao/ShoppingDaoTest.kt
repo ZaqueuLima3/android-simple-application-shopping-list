@@ -55,4 +55,19 @@ class ShoppingDaoTest {
         val allShoppingItems = sut.observeAllShoppingItems().getOrAwaitValue()
         assertThat(allShoppingItems).contains(shoppingItem)
     }
+
+    @Test
+    fun should_delete_ShoppingItem() = runBlockingTest {
+        val shoppingItem = ShoppingItem(
+            id = 1,
+            name = "any_name",
+            amount = 1,
+            price = 1F,
+            imageUrl = "any_url"
+        )
+        sut.insertShoppingItem(shoppingItem)
+        sut.deleteShoppingItem(shoppingItem)
+        val allShoppingItems = sut.observeAllShoppingItems().getOrAwaitValue()
+        assertThat(allShoppingItems).doesNotContain(shoppingItem)
+    }
 }
