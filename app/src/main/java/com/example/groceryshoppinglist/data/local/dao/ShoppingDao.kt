@@ -15,4 +15,7 @@ interface ShoppingDao {
 
     @Query("SELECT * FROM $SHOPPING_ITEM_TABLE_NAME")
     fun observeAllShoppingItems(): LiveData<List<ShoppingItem>>
+
+    @Query("SELECT SUM(price * amount) FROM $SHOPPING_ITEM_TABLE_NAME")
+    fun observeTotalPrice(): LiveData<Float>
 }
