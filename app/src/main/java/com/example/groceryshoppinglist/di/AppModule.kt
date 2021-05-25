@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.example.groceryshoppinglist.data.local.config.ShoppingItemDatabase
 import com.example.groceryshoppinglist.data.remote.api.PixabayAPI
+import com.example.groceryshoppinglist.data.repository.ImageDataRepository
+import com.example.groceryshoppinglist.data.repository.ImageRepository
 import com.example.groceryshoppinglist.shared.Constants.BASE_URL
 import com.example.groceryshoppinglist.shared.Constants.DATABASE_NAME
 import dagger.Module
@@ -39,4 +41,10 @@ object AppModule {
             .build()
             .create(PixabayAPI::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideImageDataRepository(
+        api: PixabayAPI
+    ) = ImageDataRepository(api) as ImageRepository
 }
