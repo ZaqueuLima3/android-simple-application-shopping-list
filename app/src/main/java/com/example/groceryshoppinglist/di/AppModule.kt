@@ -3,9 +3,12 @@ package com.example.groceryshoppinglist.di
 import android.content.Context
 import androidx.room.Room
 import com.example.groceryshoppinglist.data.local.config.ShoppingItemDatabase
+import com.example.groceryshoppinglist.data.local.dao.ShoppingDao
 import com.example.groceryshoppinglist.data.remote.api.PixabayAPI
 import com.example.groceryshoppinglist.data.repository.ImageDataRepository
 import com.example.groceryshoppinglist.data.repository.ImageRepository
+import com.example.groceryshoppinglist.data.repository.ShoppingItemDataRepository
+import com.example.groceryshoppinglist.data.repository.ShoppingItemRepository
 import com.example.groceryshoppinglist.shared.Constants.BASE_URL
 import com.example.groceryshoppinglist.shared.Constants.DATABASE_NAME
 import dagger.Module
@@ -47,4 +50,10 @@ object AppModule {
     fun provideImageDataRepository(
         api: PixabayAPI
     ) = ImageDataRepository(api) as ImageRepository
+
+    @Singleton
+    @Provides
+    fun provideShoppingItemDataRepository(
+        dao: ShoppingDao
+    ) = ShoppingItemDataRepository(dao) as ShoppingItemRepository
 }
