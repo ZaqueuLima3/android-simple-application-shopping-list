@@ -69,4 +69,10 @@ class InsertShoppingItemTest {
             assertThat(result.status).isEqualTo(Status.ERROR)
         }
 
+    @Test
+    fun `should return success when insert an item with valid input`() = runBlockingTest {
+        val params = InsertShoppingItem.Params("name", "5", "3.0", "imageUrl")
+        val result = sut.execute(params)
+        assertThat(result.status).isEqualTo(Status.SUCCESS)
+    }
 }
