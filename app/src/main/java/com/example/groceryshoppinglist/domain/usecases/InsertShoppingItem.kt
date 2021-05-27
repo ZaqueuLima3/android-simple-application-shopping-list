@@ -1,15 +1,16 @@
 package com.example.groceryshoppinglist.domain.usecases
 
 import com.example.groceryshoppinglist.data.local.model.ShoppingItem
+import com.example.groceryshoppinglist.data.local.model.toDomain
 import com.example.groceryshoppinglist.data.repository.ShoppingItemRepository
+import com.example.groceryshoppinglist.domain.model.GroceryItem
 import com.example.groceryshoppinglist.shared.Constants
 import com.example.groceryshoppinglist.shared.Resource
-import timber.log.Timber
 
 class InsertShoppingItem(
     private val shoppingItemRepository: ShoppingItemRepository
-) : UseCase<InsertShoppingItem.Params, Resource<ShoppingItem>> {
-    override suspend fun execute(params: Params?): Resource<ShoppingItem> {
+) : UseCase<InsertShoppingItem.Params, Resource<GroceryItem>> {
+    override suspend fun execute(params: Params?): Resource<GroceryItem> {
         return try {
             requireNotNull(params) { "Params must not be null." }
             if (params.name.isBlank() || params.amountString.isBlank() || params.priceString.isBlank()) {
@@ -29,7 +30,7 @@ class InsertShoppingItem(
                 price = params.priceString.toFloat(),
                 imageUrl = params.imageUrl
             )
-            Resource.success(shoppingItem)
+            Resource.success(shoppingItem.toDomain())
         } catch (e: Exception) {
             Resource.error(e.message.toString(), null)
         }

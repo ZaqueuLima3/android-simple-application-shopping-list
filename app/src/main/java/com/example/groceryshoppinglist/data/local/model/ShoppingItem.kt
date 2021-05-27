@@ -2,6 +2,7 @@ package com.example.groceryshoppinglist.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.groceryshoppinglist.domain.model.GroceryItem
 
 @Entity(tableName = ShoppingItem.SHOPPING_ITEM_TABLE_NAME)
 data class ShoppingItem(
@@ -16,3 +17,11 @@ data class ShoppingItem(
         const val SHOPPING_ITEM_TABLE_NAME = "shopping_item"
     }
 }
+
+fun ShoppingItem.toDomain() = GroceryItem(
+    id = id,
+    name = name,
+    amount = amount,
+    price = price,
+    imageUrl = imageUrl
+)
