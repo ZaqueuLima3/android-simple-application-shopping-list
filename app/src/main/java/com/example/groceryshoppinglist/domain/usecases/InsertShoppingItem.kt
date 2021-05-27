@@ -21,9 +21,15 @@ class InsertShoppingItem(
             if (params.priceString.length > Constants.MAX_PRICE_LENGTH) {
                 return Resource.error(ERROR_EXCEED_PRICE_LENGTH, null)
             }
-            params.amountString.toIntOrNull()
+            val amount = params.amountString.toIntOrNull()
                 ?: return Resource.error(ERROR_INVALID_AMOUNT, null)
-            return Resource.success(null)
+            val shoppingItem = ShoppingItem(
+                name = params.name,
+                amount = amount as Int,
+                price = params.priceString.toFloat(),
+                imageUrl = params.imageUrl
+            )
+            Resource.success(shoppingItem)
         } catch (e: Exception) {
             Resource.error(e.message.toString(), null)
         }
