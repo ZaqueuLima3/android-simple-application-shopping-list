@@ -45,13 +45,28 @@ class InsertShoppingItemTest {
     }
 
     @Test
-    fun `should return an error when try to insert an item with too long price`() = runBlockingTest {
-        val priceWithLengthGreaterThanAllowed = buildString {
-            (1..Constants.MAX_PRICE_LENGTH + 1).forEach { _ -> append(1) }
+    fun `should return an error when try to insert an item with too long price`() =
+        runBlockingTest {
+            val priceWithLengthGreaterThanAllowed = buildString {
+                (1..Constants.MAX_PRICE_LENGTH + 1).forEach { _ -> append(1) }
+            }
+            val params =
+                InsertShoppingItem.Params(
+                    "name",
+                    "1",
+                    priceWithLengthGreaterThanAllowed,
+                    "imageUrl"
+                )
+            val result = sut.execute(params)
+            assertThat(result.status).isEqualTo(Status.ERROR)
         }
-        val params =
-            InsertShoppingItem.Params("name", "1", priceWithLengthGreaterThanAllowed, "imageUrl")
-        val result =  sut.execute(params)
-        assertThat(result.status).isEqualTo(Status.ERROR)
-    }
+
+    @Test
+    fun `should return an error when try to insert an item with too high amount`() =
+        runBlockingTest {
+            val params = InsertShoppingItem.Params("name", "999999999999999", "3.0", "imageUrl")
+            val result = sut.execute(params)
+            assertThat(result.status).isEqualTo(Status.ERROR)
+        }
+
 }
