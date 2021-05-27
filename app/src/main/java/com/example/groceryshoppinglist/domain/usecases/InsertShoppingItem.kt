@@ -21,6 +21,8 @@ class InsertShoppingItem(
             if (params.priceString.length > Constants.MAX_PRICE_LENGTH) {
                 return Resource.error(ERROR_EXCEED_PRICE_LENGTH, null)
             }
+            params.amountString.toIntOrNull()
+                ?: return Resource.error(ERROR_INVALID_AMOUNT, null)
             return Resource.success(null)
         } catch (e: Exception) {
             Resource.error(e.message.toString(), null)
