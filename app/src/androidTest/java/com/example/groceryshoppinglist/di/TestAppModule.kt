@@ -3,7 +3,7 @@ package com.example.groceryshoppinglist.di
 import android.content.Context
 import androidx.room.Room
 import com.example.groceryshoppinglist.data.local.config.ShoppingItemDatabase
-import com.example.groceryshoppinglist.shared.Constants.NAMED_MODULE
+import com.example.groceryshoppinglist.utils.Constants.NAMED_MODULE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

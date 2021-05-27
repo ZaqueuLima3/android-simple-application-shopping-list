@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import com.example.groceryshoppinglist.data.local.config.ShoppingItemDatabase
 import com.example.groceryshoppinglist.data.local.model.ShoppingItem
-import com.example.groceryshoppinglist.shared.Constants.NAMED_MODULE
+import com.example.groceryshoppinglist.utils.Constants.NAMED_MODULE
 import com.example.groceryshoppinglist.utils.getOrAwaitValue
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
