@@ -15,7 +15,10 @@ class InsertShoppingItem(
             if (params.name.isBlank() || params.amountString.isBlank() || params.priceString.isBlank()) {
                 return  Resource.error(ERROR_EMPTY_FIELD, null)
             }
-            return Resource.error(ERROR_EMPTY_FIELD, null)
+            if (params.name.length > Constants.MAX_NAME_LENGTH) {
+                return Resource.error(ERROR_EXCEED_NAME_LENGTH, null)
+            }
+            return Resource.success(null)
         } catch (e: Exception) {
             Resource.error(e.message.toString(), null)
         }
