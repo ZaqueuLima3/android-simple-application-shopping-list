@@ -6,18 +6,18 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/add_grocery_image"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="32dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_default_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_default_image" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
+        android:id="@+id/add_grocery_name_container"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -26,49 +26,52 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toBottomOf="@+id/add_grocery_image">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edItemName"
+            android:id="@+id/add_grocery_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/add_grocery_amount_container"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="204dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/add_grocery_name_container">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_grocery_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Amount" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/add_grocery_price_container"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textInputLayout"
-        app:layout_constraintTop_toTopOf="@+id/textInputLayout">
+        app:layout_constraintStart_toEndOf="@+id/add_grocery_amount_container"
+        app:layout_constraintTop_toTopOf="@+id/add_grocery_amount_container">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_grocery_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Price per item" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/add"
+        android:id="@+id/add_grocery_to_list_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -78,5 +81,5 @@
         android:text="Add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/add_grocery_amount_container" />
 </androidx.constraintlayout.widget.ConstraintLayout>
