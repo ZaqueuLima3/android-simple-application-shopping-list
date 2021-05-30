@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.groceryshoppinglist.R
 import com.example.groceryshoppinglist.databinding.FragmentShoppingBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ShoppingFragment : Fragment(R.layout.fragment_shopping) {
     private var _binding: FragmentShoppingBinding? = null
     private val binding get() = _binding!!
