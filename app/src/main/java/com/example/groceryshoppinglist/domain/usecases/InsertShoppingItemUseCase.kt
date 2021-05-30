@@ -7,9 +7,9 @@ import com.example.groceryshoppinglist.domain.model.GroceryItem
 import com.example.groceryshoppinglist.shared.Constants
 import com.example.groceryshoppinglist.shared.Resource
 
-class InsertShoppingItem(
+class InsertShoppingItemUseCase(
     private val shoppingItemRepository: ShoppingItemRepository
-) : UseCase<InsertShoppingItem.Params, Resource<GroceryItem>> {
+) : UseCase<InsertShoppingItemUseCase.Params, Resource<GroceryItem>> {
     override suspend fun execute(params: Params?): Resource<GroceryItem> {
         return try {
             requireNotNull(params) { "Params must not be null." }
@@ -30,6 +30,7 @@ class InsertShoppingItem(
                 price = params.priceString.toFloat(),
                 imageUrl = params.imageUrl
             )
+            shoppingItemRepository.insertShoppingItem(shoppingItem)
             Resource.success(shoppingItem.toDomain())
         } catch (e: Exception) {
             Resource.error(e.message.toString(), null)
