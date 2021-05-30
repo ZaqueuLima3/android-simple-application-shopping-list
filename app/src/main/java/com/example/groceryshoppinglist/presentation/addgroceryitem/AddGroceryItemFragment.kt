@@ -43,8 +43,36 @@ class AddGroceryItemFragment : Fragment(R.layout.fragment_add_grocery_item) {
         super.onViewCreated(view, savedInstanceState)
         addGroceryItemViewModel =
             ViewModelProvider(requireActivity()).get(AddGroceryItemViewModel::class.java)
+        bindObservers()
+        bindListeners()
         setOnBackPressed()
     }
+
+    private fun bindObservers() {
+        addGroceryItemViewModel.insertGroceryItem.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { result ->
+                when (result.status) {
+                    Status.SUCCESS -> handleStatusSuccess()
+                    Status.ERROR -> handleStatusError(result.message)
+                    Status.LOADING -> handleStatusLoading()
+                }
+            }
+        })
+    }
+
+    private fun bindListeners() {
+        binding.addGroceryImage.setOnClickListener { }
+        binding.addGroceryToListBtn.setOnClickListener {
+            lifecycleScope.launch {
+                addGroceryItemViewModel.insertGroceryItem(
+                    binding.addGroceryName.text.toString(),
+                    binding.addGroceryAmount.text.toString(),
+                    binding.addGroceryPrice.text.toString()
+                )
+            }
+        }
+    }
+
 
     private fun setOnBackPressed() {
         val callback = object : OnBackPressedCallback(true) {
@@ -53,5 +81,27 @@ class AddGroceryItemFragment : Fragment(R.layout.fragment_add_grocery_item) {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)
+    }
+
+    private fun handleStatusSuccess() {
+        showSnackBar(getString(R.string.added_shopping_item))
+        findNavController().popBackStack()
+    }
+
+    private fun handleStatusLoading() {
+        TODO("Not yet implemented")
+    }
+
+    private fun handleStatusError(message: String?) {
+        message?.let { showSnackBar(it) }
+    }
+
+    private fun showSnackBar(message: String) {
+        val view = activity?.findViewById(R.id.root_layout) as ConstraintLayout
+        Snackbar.make(
+            view,
+            message,
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 }
