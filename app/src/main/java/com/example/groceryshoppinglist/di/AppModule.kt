@@ -9,6 +9,7 @@ import com.example.groceryshoppinglist.data.repository.ImageDataRepository
 import com.example.groceryshoppinglist.data.repository.ImageRepository
 import com.example.groceryshoppinglist.data.repository.ShoppingItemDataRepository
 import com.example.groceryshoppinglist.data.repository.ShoppingItemRepository
+import com.example.groceryshoppinglist.domain.usecases.InsertShoppingItemUseCase
 import com.example.groceryshoppinglist.shared.Constants.BASE_URL
 import com.example.groceryshoppinglist.shared.Constants.DATABASE_NAME
 import dagger.Module
@@ -56,4 +57,10 @@ object AppModule {
     fun provideShoppingItemDataRepository(
         dao: ShoppingDao
     ) = ShoppingItemDataRepository(dao) as ShoppingItemRepository
+
+    @Singleton
+    @Provides
+    fun provideInsetShoppingItem(
+        shoppingItemRepository: ShoppingItemRepository
+    ) = InsertShoppingItemUseCase(shoppingItemRepository)
 }
