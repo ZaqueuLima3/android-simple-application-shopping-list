@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -16,8 +15,6 @@ import com.example.groceryshoppinglist.databinding.FragmentAddGroceryItemBinding
 import com.example.groceryshoppinglist.shared.Status
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -49,7 +46,7 @@ class AddGroceryItemFragment : Fragment(R.layout.fragment_add_grocery_item) {
     }
 
     private fun bindObservers() {
-        addGroceryItemViewModel.insertGroceryItem.observe(viewLifecycleOwner, Observer { event ->
+        addGroceryItemViewModel.insertGroceryItem.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandled()?.let { result ->
                 when (result.status) {
                     Status.SUCCESS -> handleStatusSuccess()

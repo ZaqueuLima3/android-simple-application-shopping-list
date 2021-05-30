@@ -26,7 +26,7 @@ class InsertShoppingItemUseCase(
                 ?: return Resource.error(ERROR_INVALID_AMOUNT)
             val shoppingItem = ShoppingItem(
                 name = params.name,
-                amount = amount as Int,
+                amount = amount,
                 price = params.priceString.toFloat(),
                 imageUrl = params.imageUrl
             )
