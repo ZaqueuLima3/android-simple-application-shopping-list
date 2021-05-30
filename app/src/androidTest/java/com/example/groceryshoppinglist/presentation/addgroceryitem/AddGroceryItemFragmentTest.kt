@@ -46,6 +46,33 @@ class AddGroceryItemFragmentTest {
     }
 
     @Test
+    fun shouldInsertAnItemIntoDbWhenClickOnButtonToAddNewItem() {
+        launchFragmentInHiltContainer<AddGroceryItemFragment> {
+            addGroceryItemViewModel = testViewModel
+        }
+        onView(withId(R.id.add_grocery_name)).perform(replaceText("Grocery item"))
+        onView(withId(R.id.add_grocery_amount)).perform(replaceText("5"))
+        onView(withId(R.id.add_grocery_price)).perform(replaceText("5.5"))
+        onView(withId(R.id.add_grocery_to_list_btn)).perform(click())
+        val status =
+            testViewModel.insertGroceryItem.getOrAwaitValue().getContentIfNotHandled()?.status
+        assertThat(status).isEqualTo(Status.SUCCESS)
+    }
+
+    @Test
+    fun shouldReturnAndErrorIfAnyFieldIsMissing() {
+        launchFragmentInHiltContainer<AddGroceryItemFragment> {
+            addGroceryItemViewModel = testViewModel
+        }
+        onView(withId(R.id.add_grocery_name)).perform(replaceText("Grocery item"))
+        onView(withId(R.id.add_grocery_amount)).perform(replaceText("5"))
+        onView(withId(R.id.add_grocery_to_list_btn)).perform(click())
+        val status =
+            testViewModel.insertGroceryItem.getOrAwaitValue().getContentIfNotHandled()?.status
+        assertThat(status).isEqualTo(Status.ERROR)
+    }
+
+    @Test
     fun shouldPopBackStackWhenPressedBackButton() {
         val navController = mock(NavController::class.java)
         launchFragmentInHiltContainer<AddGroceryItemFragment> {
