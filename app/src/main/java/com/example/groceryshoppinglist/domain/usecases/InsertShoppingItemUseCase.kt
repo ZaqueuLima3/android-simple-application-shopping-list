@@ -14,16 +14,16 @@ class InsertShoppingItemUseCase(
         return try {
             requireNotNull(params) { "Params must not be null." }
             if (params.name.isBlank() || params.amountString.isBlank() || params.priceString.isBlank()) {
-                return  Resource.error(ERROR_EMPTY_FIELD, null)
+                return  Resource.error(ERROR_EMPTY_FIELD)
             }
             if (params.name.length > Constants.MAX_NAME_LENGTH) {
-                return Resource.error(ERROR_EXCEED_NAME_LENGTH, null)
+                return Resource.error(ERROR_EXCEED_NAME_LENGTH)
             }
             if (params.priceString.length > Constants.MAX_PRICE_LENGTH) {
-                return Resource.error(ERROR_EXCEED_PRICE_LENGTH, null)
+                return Resource.error(ERROR_EXCEED_PRICE_LENGTH)
             }
             val amount = params.amountString.toIntOrNull()
-                ?: return Resource.error(ERROR_INVALID_AMOUNT, null)
+                ?: return Resource.error(ERROR_INVALID_AMOUNT)
             val shoppingItem = ShoppingItem(
                 name = params.name,
                 amount = amount as Int,
@@ -33,7 +33,7 @@ class InsertShoppingItemUseCase(
             shoppingItemRepository.insertShoppingItem(shoppingItem)
             Resource.success(shoppingItem.toDomain())
         } catch (e: Exception) {
-            Resource.error(e.message.toString(), null)
+            Resource.error(e.message.toString())
         }
     }
 
