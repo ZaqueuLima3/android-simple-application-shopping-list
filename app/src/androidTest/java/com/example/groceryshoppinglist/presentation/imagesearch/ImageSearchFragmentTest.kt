@@ -85,4 +85,29 @@ class ImageSearchFragmentTest {
         )
         verify(navController).popBackStack()
     }
+
+    @Test
+    fun shouldSetCurrentImageWhenSelectAnImage() {
+        val image = Image(
+            id = 0,
+            previewURL = "any_url"
+        )
+        launchFragmentInHiltContainer<ImageSearchFragment>(
+            fragmentFactory = fragmentFactory
+        ) {
+            Navigation.setViewNavController(requireView(), navController)
+            imageSearchAdapter.images = listOf(
+                image
+            )
+            viewModel = viewModelTest
+            addGroceryItemViewModel = addGroceryItemViewModelTest
+        }
+        onView(withId(R.id.image_search_list)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<ImageSearchAdapter.ViewHolder>(
+                0,
+                click()
+            )
+        )
+        assertThat(addGroceryItemViewModelTest.currentImage.getOrAwaitValue()).isEqualTo(image.previewURL)
+    }
 }
