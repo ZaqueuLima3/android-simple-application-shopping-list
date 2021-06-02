@@ -2,6 +2,9 @@ package com.example.groceryshoppinglist.di
 
 import android.content.Context
 import androidx.room.Room
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.groceryshoppinglist.R
 import com.example.groceryshoppinglist.data.local.config.ShoppingItemDatabase
 import com.example.groceryshoppinglist.data.local.dao.ShoppingDao
 import com.example.groceryshoppinglist.data.remote.api.PixabayAPI
@@ -10,6 +13,7 @@ import com.example.groceryshoppinglist.data.repository.ImageRepository
 import com.example.groceryshoppinglist.data.repository.ShoppingItemDataRepository
 import com.example.groceryshoppinglist.data.repository.ShoppingItemRepository
 import com.example.groceryshoppinglist.domain.usecases.InsertShoppingItemUseCase
+import com.example.groceryshoppinglist.domain.usecases.SearchImageUseCase
 import com.example.groceryshoppinglist.shared.Constants.BASE_URL
 import com.example.groceryshoppinglist.shared.Constants.DATABASE_NAME
 import dagger.Module
@@ -63,4 +67,21 @@ object AppModule {
     fun provideInsetShoppingItem(
         shoppingItemRepository: ShoppingItemRepository
     ) = InsertShoppingItemUseCase(shoppingItemRepository)
+
+    @Singleton
+    @Provides
+    fun provideGlideInstance(
+        @ApplicationContext context: Context
+    ) = Glide.with(context)
+        .setDefaultRequestOptions(
+            RequestOptions()
+                .placeholder(R.drawable.ic_default_image)
+                .error(R.drawable.ic_default_image)
+        )
+
+    @Singleton
+    @Provides
+    fun provideSearchImage(
+        imageRepository: ImageRepository
+    ) = SearchImageUseCase(imageRepository)
 }

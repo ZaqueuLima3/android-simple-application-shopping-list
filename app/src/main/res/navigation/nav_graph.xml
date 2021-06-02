@@ -16,5 +16,12 @@
         android:id="@+id/addGroceryItemFragment"
         android:name="com.example.groceryshoppinglist.presentation.addgroceryitem.AddGroceryItemFragment"
         android:label="AddGroceryItemFragment" >
+        <action
+            android:id="@+id/action_addGroceryItemFragment_to_imageSearchFragment"
+            app:destination="@id/imageSearchFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/imageSearchFragment"
+        android:name="com.example.groceryshoppinglist.presentation.imagesearch.ImageSearchFragment"
+        android:label="ImageSearchFragment" />
 </navigation>

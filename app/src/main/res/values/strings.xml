@@ -2,4 +2,6 @@
     <string name="app_name">Grocery Shopping List</string>
     <string name="shopping_list_title">Shopping List</string>
     <string name="added_shopping_item">Added Shopping Item</string>
+    <string name="search_for_an_image">Search for an image</string>
+    <string name="item_image">item image</string>
 </resources>

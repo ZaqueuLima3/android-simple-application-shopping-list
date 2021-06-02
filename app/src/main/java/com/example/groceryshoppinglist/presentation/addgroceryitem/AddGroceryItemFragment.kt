@@ -10,15 +10,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.RequestManager
 import com.example.groceryshoppinglist.R
 import com.example.groceryshoppinglist.databinding.FragmentAddGroceryItemBinding
 import com.example.groceryshoppinglist.shared.Status
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class AddGroceryItemFragment : Fragment(R.layout.fragment_add_grocery_item) {
+class AddGroceryItemFragment @Inject constructor(
+    private val glide: RequestManager
+) : Fragment(R.layout.fragment_add_grocery_item) {
     private var _binding: FragmentAddGroceryItemBinding? = null
     private val binding get() = _binding!!
     lateinit var addGroceryItemViewModel: AddGroceryItemViewModel
@@ -55,10 +59,18 @@ class AddGroceryItemFragment : Fragment(R.layout.fragment_add_grocery_item) {
                 }
             }
         })
+        addGroceryItemViewModel.currentImage.observe(viewLifecycleOwner, {
+            glide.load(it)
+                .into(binding.addGroceryImage)
+        })
     }
 
     private fun bindListeners() {
-        binding.addGroceryImage.setOnClickListener { }
+        binding.addGroceryImage.setOnClickListener {
+            findNavController().navigate(
+                AddGroceryItemFragmentDirections.actionAddGroceryItemFragmentToImageSearchFragment()
+            )
+        }
         binding.addGroceryToListBtn.setOnClickListener {
             lifecycleScope.launch {
                 addGroceryItemViewModel.insertGroceryItem(

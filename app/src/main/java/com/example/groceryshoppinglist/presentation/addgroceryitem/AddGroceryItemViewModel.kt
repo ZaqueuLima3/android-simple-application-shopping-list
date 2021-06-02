@@ -13,10 +13,6 @@ import com.example.groceryshoppinglist.shared.Resource
 class AddGroceryItemViewModel @ViewModelInject constructor(
     private val insertShoppingItemUseCase: InsertShoppingItemUseCase
 ) : ViewModel() {
-    private val _image = MutableLiveData<Event<Resource<Image>>>()
-    val image: LiveData<Event<Resource<Image>>>
-        get() = _image
-
     private val _currentImage = MutableLiveData<String>()
     val currentImage: LiveData<String>
         get() = _currentImage
