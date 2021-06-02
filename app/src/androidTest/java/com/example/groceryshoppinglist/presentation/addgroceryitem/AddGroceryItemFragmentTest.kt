@@ -13,6 +13,7 @@ import com.example.groceryshoppinglist.R
 import com.example.groceryshoppinglist.data.repository.FakeAndroidTestShoppingItemRepository
 import com.example.groceryshoppinglist.domain.usecases.InsertShoppingItemUseCase
 import com.example.groceryshoppinglist.launchFragmentInHiltContainer
+import com.example.groceryshoppinglist.presentation.factory.TestGroceryFragmentFactory
 import com.example.groceryshoppinglist.shared.Status
 import com.example.groceryshoppinglist.utils.getOrAwaitValue
 import com.google.common.truth.Truth.assertThat
@@ -22,8 +23,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
+import javax.inject.Inject
 
 
 @MediumTest
@@ -34,6 +35,8 @@ class AddGroceryItemFragmentTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
     @get:Rule
     var hiltAndroidRule = HiltAndroidRule(this)
+    @Inject
+    lateinit var fragmentFactory: TestGroceryFragmentFactory
     private lateinit var testViewModel: AddGroceryItemViewModel
     private lateinit var insertShoppingItemUseCase: InsertShoppingItemUseCase
 
@@ -47,7 +50,9 @@ class AddGroceryItemFragmentTest {
 
     @Test
     fun shouldInsertAnItemIntoDbWhenClickOnButtonToAddNewItem() {
-        launchFragmentInHiltContainer<AddGroceryItemFragment> {
+        launchFragmentInHiltContainer<AddGroceryItemFragment>(
+            fragmentFactory = fragmentFactory
+        ) {
             addGroceryItemViewModel = testViewModel
         }
         onView(withId(R.id.add_grocery_name)).perform(replaceText("Grocery item"))
@@ -61,7 +66,9 @@ class AddGroceryItemFragmentTest {
 
     @Test
     fun shouldReturnAndErrorIfAnyFieldIsMissing() {
-        launchFragmentInHiltContainer<AddGroceryItemFragment> {
+        launchFragmentInHiltContainer<AddGroceryItemFragment>(
+            fragmentFactory = fragmentFactory
+        ) {
             addGroceryItemViewModel = testViewModel
         }
         onView(withId(R.id.add_grocery_name)).perform(replaceText("Grocery item"))
@@ -75,10 +82,26 @@ class AddGroceryItemFragmentTest {
     @Test
     fun shouldPopBackStackWhenPressedBackButton() {
         val navController = mock(NavController::class.java)
-        launchFragmentInHiltContainer<AddGroceryItemFragment> {
+        launchFragmentInHiltContainer<AddGroceryItemFragment>(
+            fragmentFactory = fragmentFactory
+        ) {
             Navigation.setViewNavController(requireView(), navController)
         }
         pressBack()
         verify(navController).popBackStack()
+    }
+
+    @Test
+    fun shouldNavigateToImageSearchFragmentWhenClickInImage() {
+        val navController = mock(NavController::class.java)
+        launchFragmentInHiltContainer<AddGroceryItemFragment>(
+            fragmentFactory = fragmentFactory
+        ) {
+            Navigation.setViewNavController(requireView(), navController)
+        }
+        onView(withId(R.id.add_grocery_image)).perform(click())
+        verify(navController, times(1)).navigate(
+            AddGroceryItemFragmentDirections.actionAddGroceryItemFragmentToImageSearchFragment()
+        )
     }
 }
